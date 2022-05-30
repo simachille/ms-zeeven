@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ms-zeeven:
+    container_name: ms-zeeven
+    # The official v2 Traefik docker image
+    image: simachille/ms-zeeven:latest
+    # Enables the web UI and tells Traefik to listen to docker
+   
+    restart: always
+    ports:
+      # The HTTP port
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ms-zeeven.rule=Headers(`X-Host`, `app.zeeven.chillo.fr`)"
+    networks:
+      - applications-network
+networks:
+  applications-network:
+    external: true
+    name: applications-network
