@@ -1,8 +1,7 @@
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
+      host: db-mongo
       database: zeeven
 
   mail:
