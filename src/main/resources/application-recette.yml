@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: zeeven
+
+  mail:
+      accountLink: http://app.zeeven.chillo.fr/activer-mon-compte?code=
+
+
+
+
+
+
+
+
