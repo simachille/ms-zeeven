@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8087
+
+spring:
+    application:
+      name: ms-zeeven
+
+    mail:
+        host: localhost
+        username :
+        password:
+        port: 25
+        protocol: smtp
+        test-connection: false
+
+mongock:
+  migration-scan-package:
+    - com.cs.ge.configuration
+
+jwt:
+  header: "Authorization"
+  secret: "AL_KEY"
+  expiration: 3600 # (secondes) == 1 heure
+  route:
+    authentication:
+      path: "/login"
+      refresh: "/refresh"
+

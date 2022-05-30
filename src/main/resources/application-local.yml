@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: zeeven
+
+  mail:
+      accountLink: http://localhost:3000/activer-mon-compte?code=
+
+
+
+
+
+
+
+
