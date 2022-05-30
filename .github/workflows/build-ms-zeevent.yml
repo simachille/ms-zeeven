@@ -69,7 +69,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots package
+        run: mvn -Dmaven.test.skip=true compile jib:build
   
 
   run-container:

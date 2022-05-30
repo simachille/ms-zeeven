@@ -110,6 +110,9 @@
                     <to>
                         <image>docker.io/simachille/ms-zeeven</image>
                     </to>
+                    <entypoints>
+                      <entry>java -jar -Dspring.profiles.active=develop ms-zeeven.jar</entry>
+                    </entypoints>
                 </configuration>
             </plugin>
         </plugins>
