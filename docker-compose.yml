@@ -11,9 +11,14 @@ services:
     ports:
       # The HTTP port
       - "8087:8087"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=recette"
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ms-zeeven.rule=Headers(`X-Host`, `app.zeeven.chillo.fr`)"
+      - "traefik.docker.network=applications_network"
+
     networks:
       - applications-network
 networks:
