@@ -86,4 +86,6 @@ jobs:
         password: ${{ secrets.RECETTE_APPLICATIONS_PASSWPRD }}
         key: ${{ secrets.RECETTE_APPLICATIONS_SSH_PRIVATE_KEY }}
         script: |
+          docker-compose -f /opt/applications/zeeven/ms-zeeven/docker-compose.yml stop
+          docker-compose -f /opt/applications/zeeven/ms-zeeven/docker-compose.yml rm
           docker-compose -f /opt/applications/zeeven/ms-zeeven/docker-compose.yml up -d

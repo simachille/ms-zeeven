@@ -3,7 +3,6 @@ spring:
     mongodb:
       host: db-mongo
       database: zeeven
-
   mail:
       accountLink: http://app.zeeven.chillo.fr/activer-mon-compte?code=
 
