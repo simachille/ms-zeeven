@@ -8,6 +8,7 @@ spring:
       name: ms-zeeven
 
     mail:
+        accountLink: http://app.zeeven.chillo.fr/activer-mon-compte?code=
         host: localhost
         username :
         password:

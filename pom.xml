@@ -98,24 +98,28 @@
     </dependencyManagement>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.2.1</version>
-                <configuration>
-                    <to>
-                        <image>docker.io/simachille/ms-zeeven</image>
-                    </to>
-                    <entypoints>
-                        <entry>java -jar -Dspring.profiles.active=recette ms-zeeven.jar</entry>
-                    </entypoints>
-                </configuration>
-            </plugin>
-        </plugins>
+          <plugin>
+              <groupId>com.google.cloud.tools</groupId>
+              <artifactId>jib-maven-plugin</artifactId>
+              <version>3.1.4</version>
+              <configuration>
+                  <to>
+                      <image>${project.artifactId}</image>
+                  </to>
+              </configuration>
+          </plugin>
+          <plugin>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-maven-plugin</artifactId>
+              <configuration>
+                  <excludes>
+                      <exclude>
+                          <groupId>org.projectlombok</groupId>
+                          <artifactId>lombok</artifactId>
+                      </exclude>
+                  </excludes>
+              </configuration>
+          </plugin>
     </build>
 
 </project>
