@@ -24,7 +24,6 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "event", produces = "application/json")
 public class EventController {
-
     private final EventService eventService;
 
     @GetMapping

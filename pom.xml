@@ -11,7 +11,7 @@
     <groupId>com.cs</groupId>
     <artifactId>ms-zeeven</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gestion-evenement</name>
+    <name>ms-zeeven</name>
     <description>gestion de l&apos;évènement d&apos;un utilisateur</description>
     <properties>
         <java.version>11</java.version>

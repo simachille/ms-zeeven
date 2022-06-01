@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class ProfileService implements UserDetailsService {
-
-
+    
     private final UtilisateurRepository utilisateurRepository;
 
     @Override

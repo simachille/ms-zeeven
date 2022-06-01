@@ -7,27 +7,27 @@ import io.mongock.api.annotations.RollbackExecution;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @ChangeUnit(order = "002", id = "createCat", author = "athena", runAlways = true)
-public class DatabaseChangeLogC {
+public class CategoryChangeLog {
 
     private final MongoTemplate mongoTemplate;
 
-    public DatabaseChangeLogC(final MongoTemplate mongoTemplate) {
+    public CategoryChangeLog(final MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
     @Execution
-    public void createCat() {
-        final Categorie categorie = new Categorie();
-        categorie.setLibelle("Mariage");
+    public void create() {
+        Categorie mariage = new Categorie();
+        mariage.setLibelle("Mariage");
+        this.mongoTemplate.save(mariage);
 
-        final Categorie categorie1 = new Categorie();
-        categorie1.setLibelle("Anniversaire");
+        Categorie anniversaire = new Categorie();
+        anniversaire.setLibelle("Anniversaire");
+        this.mongoTemplate.save(anniversaire);
 
-        final Categorie categorie2 = new Categorie();
-        categorie2.setLibelle("Salon");
-
-
-        this.mongoTemplate.save(categorie);
+        Categorie salon = new Categorie();
+        salon.setLibelle("Salon");
+        this.mongoTemplate.save(salon);
 
     }
 
