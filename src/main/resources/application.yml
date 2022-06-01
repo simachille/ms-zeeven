@@ -6,15 +6,9 @@ server:
 spring:
     application:
       name: ms-zeeven
-
     mail:
-        accountLink: http://app.zeeven.chillo.fr/activer-mon-compte?code=
-        host: localhost
-        username :
-        password:
-        port: 25
-        protocol: smtp
-        test-connection: false
+      host: localhost
+      port: 25
 
 mongock:
   migration-scan-package:
