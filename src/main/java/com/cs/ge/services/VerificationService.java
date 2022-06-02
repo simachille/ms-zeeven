@@ -6,6 +6,7 @@ import com.cs.ge.exception.ApplicationException;
 import com.cs.ge.repositories.VerificationRepository;
 import com.cs.ge.utils.Data;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,15 @@ public class VerificationService {
     private final VerificationRepository verificationRepository;
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
-    private final String accountLink = "account";
+    private final String accountLink;
 
     public VerificationService(
+            @Value("${spring.mail.accountLink}") final String accountLink,
             final SpringTemplateEngine templateEngine,
             final VerificationRepository verificationRepository,
             final JavaMailSender javaMailSender
     ) {
+        this.accountLink = accountLink;
         this.templateEngine = templateEngine;
         this.verificationRepository = verificationRepository;
         this.javaMailSender = javaMailSender;
