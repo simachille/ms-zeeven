@@ -45,7 +45,7 @@ jobs:
           password: ${{ secrets.RECETTE_APPLICATIONS_PASSWPRD }}
           key: ${{ secrets.RECETTE_APPLICATIONS_SSH_PRIVATE_KEY }}
           source: "docker-compose.yml"
-          target: "/opt/applications/zeeven/app-zeeven"
+          target: "/opt/applications/zeeven/ms-zeeven"
 
   dockerize:
     runs-on: ubuntu-latest
@@ -86,6 +86,6 @@ jobs:
         password: ${{ secrets.RECETTE_APPLICATIONS_PASSWPRD }}
         key: ${{ secrets.RECETTE_APPLICATIONS_SSH_PRIVATE_KEY }}
         script: |
-          docker-compose -f /opt/applications/zeeven/app-zeeven/docker-compose.yml stop
-          docker-compose -f /opt/applications/zeeven/app-zeeven/docker-compose.yml rm -f
-          docker-compose -f /opt/applications/zeeven/app-zeeven/docker-compose.yml up -d
+          docker-compose -f /opt/applications/zeeven/ms-zeeven/docker-compose.yml stop
+          docker-compose -f /opt/applications/zeeven/ms-zeeven/docker-compose.yml rm -f
+          docker-compose -f /opt/applications/zeeven/ms-zeeven/docker-compose.yml up -d
