@@ -72,6 +72,11 @@ jobs:
       - name: Build with Maven
         run: mvn -Dmaven.test.skip=true clean compile package
       
+      - name: check
+        run: |
+          ls -al 
+          ls -al target
+      
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v3
@@ -79,7 +84,7 @@ jobs:
           images: simachille/ms-zeeven
       
       - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
