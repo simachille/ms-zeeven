@@ -29,7 +29,7 @@ public class VerificationService {
     private final String accountLink;
 
     public VerificationService(
-            @Value("${spring.mail.accountLink}") final String accountLink,
+            @Value("${spring.mail.accountLink: ''}") final String accountLink,
             final SpringTemplateEngine templateEngine,
             final VerificationRepository verificationRepository,
             final JavaMailSender javaMailSender
