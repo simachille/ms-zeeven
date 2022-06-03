@@ -17,7 +17,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ms-zeeven.rule=Headers(`X-Host`, `api.zeeven.chillo.fr`)"
-      - "traefik.docker.network=applications_network"
+      - "traefik.docker.network=applications-network"
 
     networks:
       - applications-network
