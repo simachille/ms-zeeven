@@ -1,10 +1,13 @@
+app:
+  host: http://app.zeeven.chillo.fr
 spring:
   data:
     mongodb:
       host: db-mongo
       database: zeeven
   mail:
-      accountLink: http://app.zeeven.chillo.fr/activer-mon-compte?code=
+      host: http://app.zeeven.chillo.fr
+      accountLink: ${app.host}/activer-mon-compte?code=
 
 
 

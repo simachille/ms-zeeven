@@ -23,7 +23,9 @@ public class Event {
     private String name;
     private EventStatus status;
     private Categorie categorie;
-    private Set<Instant> days;
-    private List<Guest> contacts;
+    private Set<Instant> dates;
+    private Utilisateur author;
+    private List<Profile> contacts;
     private List<Guest> guests;
+    private List<Schedule> schedules;
 }

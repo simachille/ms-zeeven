@@ -2,6 +2,7 @@ package com.cs.ge.controllers;
 
 import com.cs.ge.entites.Event;
 import com.cs.ge.entites.Guest;
+import com.cs.ge.entites.Schedule;
 import com.cs.ge.services.EventService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,12 +55,22 @@ public class EventController {
     }
 
     @PostMapping(value = "{id}/guest")
-    public void addInvites(@PathVariable final String id, @RequestBody final Guest guest) {
-        this.eventService.addInvites(id, guest);
+    public void addGuests(@PathVariable final String id, @RequestBody final Guest guest) {
+        this.eventService.addGuest(id, guest);
     }
 
     @GetMapping(value = "{id}/guest")
     public List<Guest> fetchGuests(@PathVariable final String id) {
         return this.eventService.guests(id);
+    }
+
+    @PostMapping(value = "{id}/schedule")
+    public void addGuests(@PathVariable final String id, @RequestBody final Schedule schedule) {
+        this.eventService.addSchedule(id, schedule);
+    }
+
+    @GetMapping(value = "{id}/schedule")
+    public List<Schedule> fetchSchedules(@PathVariable final String id) {
+        return this.eventService.schedules(id);
     }
 }

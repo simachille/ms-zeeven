@@ -1,6 +1,6 @@
 package com.cs.ge.controllers.advice;
 
-import com.cs.ge.entites.ExceptionData;
+import com.cs.ge.dto.ExceptionData;
 import com.cs.ge.exception.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

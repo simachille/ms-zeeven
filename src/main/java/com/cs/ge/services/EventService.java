@@ -2,64 +2,74 @@ package com.cs.ge.services;
 
 import com.cs.ge.entites.Event;
 import com.cs.ge.entites.Guest;
+import com.cs.ge.entites.Profile;
+import com.cs.ge.entites.Schedule;
+import com.cs.ge.entites.Utilisateur;
 import com.cs.ge.enums.EventStatus;
 import com.cs.ge.exception.ApplicationException;
-import com.cs.ge.repositories.AdresseRepository;
 import com.cs.ge.repositories.EventRepository;
-import com.cs.ge.repositories.UtilisateurRepository;
+import com.cs.ge.services.emails.MailsService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class EventService {
     private final EventRepository eventsRepository;
-    //private final AdresseRepository adresseRepository;
-    //private final UtilisateurRepository utilisateurRepository;
-
-    public EventService(final EventRepository eventsRepository, final AdresseRepository adresseRepository, final UtilisateurRepository utilisateurRepository) {
-        this.eventsRepository = eventsRepository;
-        //this.adresseRepository = adresseRepository;
-        //this.utilisateurRepository = utilisateurRepository;
-    }
+    private final MailsService mailsService;
+    private final ValidationService validationService;
+    private final QRCodeGeneratorService qrCodeGeneratorService;
 
     public List<Event> search() {
         return this.eventsRepository.findAll();
     }
 
-    public void add(final Event event) {
+    public void add(Event event) {
 
         if (event.getName() == null || event.getName().trim().isEmpty()) {
             throw new ApplicationException("Champs obligatoire");
         }
-        //final EventStatus status = EventService.eventStatus(event.getDateDebut(), event.getDateFin());
-        //event.setStatut(status);
 
-        //Adresse adresse = adresseRepository.save(event.getAdresse());
-        //event.	setAdresse(adresse);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Utilisateur authenticatedUser = (Utilisateur) authentication.getPrincipal();
+        event.setAuthor(authenticatedUser);
 
-        //Utilisateur utilisateur= utilisateurRepository.save(event.getUtilisateur());
-        //event.setUtilisateur(utilisateur);
-        this.eventsRepository.save(event);
+        final EventStatus status = eventStatus(event.getDates());
+        event.setStatus(status);
+        event = this.eventsRepository.save(event);
+
+        this.mailsService.newEvent(event);
     }
 
-    private static EventStatus eventStatus(final Date dateDebut, final Date dateFin) {
+    private static EventStatus eventStatus(Set<Instant> dates) {
+        List<Instant> datesAsList = new ArrayList<>(dates);
+        List<Instant> sorted = datesAsList.stream()
+                .distinct() // If you want only unique elements in the end List
+                .sorted()
+                .collect(Collectors.toList());
         final Date date = new Date();
         EventStatus status = EventStatus.DISABLED;
-
-        if (dateDebut.before(date)) {
+        Instant now = Instant.now();
+        if (sorted.get(0).isBefore(now)) {
             throw new ApplicationException("La date de votre évènement est invalide");
         }
 
-        if (dateDebut.equals(date)) {
+        if (sorted.get(0).equals(now)) {
             status = EventStatus.ACTIVE;
         }
 
-        if (dateFin.after(date)) {
+        if (sorted.get(sorted.size() - 1).isAfter(now)) {
             status = EventStatus.INCOMMING;
         }
 
@@ -87,11 +97,14 @@ public class EventService {
         );
     }
 
-    public void addInvites(final String id, final Guest guest) {
-        final UUID uuid = UUID.randomUUID();
-        final String uuidAsString = uuid.toString();
-        guest.setId(uuidAsString);
-        final Event event = this.read(id);
+    public void addGuest(final String eventId, final Guest guest) {
+        final var event = this.read(eventId);
+        ValidationService.checkEmail(guest.getProfile().getEmail());
+        ValidationService.checkPhone(guest.getProfile().getPhone());
+        Profile guestProfile = guest.getProfile();
+        String guestId = UUID.randomUUID().toString();
+        guestProfile.setId(guestId);
+        guest.setProfile(guestProfile);
         List<Guest> guests = event.getGuests();
         if (guests == null) {
             guests = new ArrayList<>();
@@ -99,10 +112,30 @@ public class EventService {
         guests.add(guest);
         event.setGuests(guests);
         this.eventsRepository.save(event);
+        String guestQRCODE = this.qrCodeGeneratorService.guestQRCODE(event.getId(), guestId);
+        this.mailsService.newGuest(guestProfile, event, guestQRCODE);
     }
 
     public List<Guest> guests(final String id) {
         final Event event = this.read(id);
         return event.getGuests();
+    }
+
+    public void addSchedule(String eventId, Schedule schedule) {
+        final var event = this.read(eventId);
+        String guestId = UUID.randomUUID().toString();
+        schedule.setId(guestId);
+        List<Schedule> schedules = event.getSchedules();
+        if (schedules == null) {
+            schedules = new ArrayList<>();
+        }
+        schedules.add(schedule);
+        event.setSchedules(schedules);
+        this.eventsRepository.save(event);
+    }
+
+    public List<Schedule> schedules(String id) {
+        final Event event = this.read(id);
+        return event.getSchedules();
     }
 }

@@ -2,11 +2,15 @@ server:
   servlet:
     context-path: /api
   port: 8087
-
+app:
+  host: http://app.zeeven.com
 spring:
     application:
       name: ms-zeeven
     mail:
+      activation-url: ${app.host}/activer-mon-compte?code=
+      password-url: ${app.host}/activer-mon-compte?code=
+      new-password-url: ${app.host}/activer-mon-compte?code=
       host: localhost
       port: 25
       properties:

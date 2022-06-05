@@ -1,12 +1,12 @@
 package com.cs.ge.entites;
 
 import com.cs.ge.enums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,23 +15,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+
 @Data
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Document("UTILISATEURS")
-public class Utilisateur implements UserDetails {
-    @Id
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
+public class Utilisateur extends Profile implements UserDetails {
+    @JsonProperty(access = WRITE_ONLY)
     private String password;
+    @JsonProperty(access = WRITE_ONLY)
     private Boolean enabled = false;
+    @JsonProperty(access = WRITE_ONLY)
     private Role role;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -68,5 +66,5 @@ public class Utilisateur implements UserDetails {
     public boolean isEnabled() {
         return this.enabled;
     }
-    
+
 }

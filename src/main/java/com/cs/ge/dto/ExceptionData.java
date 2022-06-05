@@ -1,14 +1,14 @@
-package com.cs.ge.entites;
+package com.cs.ge.dto;
 
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
 public class ExceptionData {
-    private  String message;
-    private  Throwable throwable;
-    private  HttpStatus httpStatus;
-    private  LocalDateTime timestamp;
+    private String message;
+    private Throwable throwable;
+    private HttpStatus httpStatus;
+    private LocalDateTime timestamp;
 
     public ExceptionData() {
     }
@@ -21,19 +21,19 @@ public class ExceptionData {
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public Throwable getThrowable() {
-        return throwable;
+        return this.throwable;
     }
 
     public HttpStatus getHttpStatus() {
-        return httpStatus;
+        return this.httpStatus;
     }
 
     public LocalDateTime getTimestamp() {
-        return timestamp;
+        return this.timestamp;
     }
 
     public void setMessage(String message) {

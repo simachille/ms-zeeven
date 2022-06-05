@@ -1,13 +1,13 @@
-package com.cs.ge.entites;
+package com.cs.ge.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
-@Document("MAIL")
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -18,7 +18,5 @@ public class Mail {
     private String subject;
     private Map<String, Object> props;
 
-    public Mail() {
 
-    }
 }
