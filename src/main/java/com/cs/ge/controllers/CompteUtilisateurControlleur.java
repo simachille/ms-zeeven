@@ -26,13 +26,13 @@ import java.io.IOException;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://api.zeeven.chillo.fr")
 @RequestMapping(consumes = "application/json", produces = "application/json")
 public class CompteUtilisateurControlleur {
 
     private final UtilisateursService utilisateursService;
     private final AuthenticationManager authenticationManager;
-    
+
     @RequestMapping(value = "connexion", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody final JwtRequest authenticationRequest) throws Exception {
         this.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
