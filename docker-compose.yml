@@ -18,6 +18,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.ms-zeeven.rule=Headers(`X-Host`, `api.zeeven.chillo.fr`)"
       - "traefik.docker.network=applications-network"
+      - "traefik.http.routers.service.middlewares=serviceheaders"
+      - "traefik.http.middlewares.serviceheaders.headers.accesscontrolalloworiginlist=*" 
+
 
     networks:
       - applications-network
